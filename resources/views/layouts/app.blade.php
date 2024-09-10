@@ -16,6 +16,12 @@
 
         <!-- Styles -->
         @livewireStyles
+
+        <style>
+            .fi-compact {
+                display: none;
+            }
+        </style>
     </head>
     <body class="font-sans antialiased">
         <x-banner />

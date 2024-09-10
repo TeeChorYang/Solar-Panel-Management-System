@@ -3,20 +3,24 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Panel;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Jetstream\HasProfilePhoto;
+use Illuminate\Notifications\Notifiable;
+use Filament\Models\Contracts\FilamentUser;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
-use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -24,10 +28,40 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'type',
         'name',
         'email',
         'password',
     ];
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        if (auth()->user()->type === 'admin') {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'supplier_id', 'id');
+    }
+
+    public function orderRequests()
+    {
+        return $this->hasMany(OrderRequest::class, 'customer_id', 'id');
+    }
+
+    public function installations()
+    {
+        return $this->hasMany(Installation::class, 'manager_id', 'id');
+    }
+
+    public function maintmaintenanceLog()
+    {
+        return $this->hasMany(MaintenanceLog::class, 'manager_id', 'id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
