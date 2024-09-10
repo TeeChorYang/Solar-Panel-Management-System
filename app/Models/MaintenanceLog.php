@@ -11,7 +11,7 @@ class MaintenanceLog extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['installation_id', 'manager_id', 'log_date', 'description'];
+    protected $fillable = ['installation_id', 'manager_id', 'log_date', 'description', 'status'];
 
     public function installation()
     {

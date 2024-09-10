@@ -81,34 +81,30 @@ class MaintenanceLogResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('installation_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('manager_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('log_date')
-                    ->dateTime()
+                    ->label('Installation ID')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('manager.name')
+                    ->label('Manager')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
+                    ->label('Status')
+                    ->badge()
+                    ->formatStateUsing(fn(string $state): string => ucwords(str_replace('_', ' ', $state)))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                Tables\Columns\TextColumn::make('log_date')
+                    ->label('Log Date')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
