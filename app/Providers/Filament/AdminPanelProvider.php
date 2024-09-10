@@ -26,6 +26,10 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->brandName('Solar Supply ')
+            ->brandLogo(asset('/assets/logo.png'))
+            ->favicon(asset('/assets/favicon.png'))
+            ->brandLogoHeight('3rem')
             ->login()
             ->darkMode(false)
             ->colors([
