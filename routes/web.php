@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\ListProduct;
+use App\Livewire\ListProducts;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,5 +16,5 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/list-product', ListProduct::class)->name('list-product');
+    Route::get('/list-product', ListProducts::class)->name('list-product');
 });
