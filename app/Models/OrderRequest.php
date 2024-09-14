@@ -11,7 +11,7 @@ class OrderRequest extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['customer_id', 'product_id', 'quantity', 'status', 'total_amount', 'approved_at'];
+    protected $fillable = ['customer_id', 'product_id', 'quantity', 'status', 'total_amount', 'approved_at', 'shipping_address'];
 
     public function customer()
     {

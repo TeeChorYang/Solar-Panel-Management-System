@@ -34,5 +34,5 @@ return [
         'cancelled' => 'Cancelled',
     ],
 
-
+    'regex_malaysian_address' => '/^[a-zA-Z0-9\s,.-\/]+(?:\n[a-zA-Z0-9\s,.-\/]+)*\d{5},\s[a-zA-Z\s]+$/',
 ];
