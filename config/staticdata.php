@@ -28,7 +28,7 @@ return [
         'cancelled' => 'Cancelled',
     ],
 
-    'maintanance_status' => [
+    'maintenance_status' => [
         'scheduled' => 'Scheduled',
         'completed' => 'Completed',
         'cancelled' => 'Cancelled',
