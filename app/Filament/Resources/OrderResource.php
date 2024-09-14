@@ -65,10 +65,6 @@ class OrderResource extends Resource
                     ->options(config('staticdata.order.order_status'))
                     ->searchable(),
 
-                Forms\Components\Textarea::make('shipping_address')
-                    ->required()
-                    ->rows(3)
-                    ->columnSpanFull(),
             ]);
     }
 

@@ -76,6 +76,12 @@ class OrderRequestResource extends Resource
                     ->label('Approved At')
                     ->default(now())
                     ->required(),
+                Forms\Components\Textarea::make('shipping_address')
+                    ->label('Shipping Address')
+                    ->required()
+                    ->rows(3)
+                    ->columnSpanFull(),
+
             ]);
     }
 
