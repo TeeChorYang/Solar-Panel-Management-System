@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\ListProducts;
+use App\Livewire\ProductStatus;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,4 +18,5 @@ Route::middleware([
     })->name('dashboard');
 
     Route::get('/list-product', ListProducts::class)->name('list-product');
+    Route::get('/product-status', ProductStatus::class)->name('product-status');
 });

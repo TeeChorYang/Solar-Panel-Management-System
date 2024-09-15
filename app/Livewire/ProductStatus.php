@@ -72,10 +72,11 @@ class ProductStatus extends Component implements HasForms, HasTable
                 
                   SelectColumn::make('status')
                     ->label('Status')
-                   
-                   
                     ->options(config('staticdata.order.order_status'))
-                    ->searchable(),
+                    ->afterStateUpdated(function ($record, $state) {
+                        $record->update(['status' => $state]);
+                    }),
+                    
 
                 
             ]);
