@@ -43,6 +43,16 @@ class User extends Authenticatable implements FilamentUser
         return false;
     }
 
+    // redirect route function for different user types
+    public function getRedirectRoute(): string
+    {
+        return match ($this->type) {
+            'customer' => 'products/list',
+            'supplier' => 'dashboard',
+            'manager' => 'dashboard',
+        };
+    }
+
     public function products()
     {
         return $this->hasMany(Product::class, 'supplier_id', 'id');
