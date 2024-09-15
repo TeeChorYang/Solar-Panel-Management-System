@@ -1,0 +1,5 @@
+.grayed-out {
+  color: gray;
+  opacity: 0.4;
+  pointer-events: none;
+}

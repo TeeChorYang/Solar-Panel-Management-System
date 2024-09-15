@@ -14,8 +14,41 @@
                 <!-- Customer -->
                 @if (Auth::user()->type === 'customer')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                            {{ __('Dashboard') }}
+                        <x-nav-link href="{{ route('customer-product-grid') }}" :active="request()->routeIs('customer-product-grid', 'product-view')">
+                            {{ __('Catalogue') }}
+                        </x-nav-link>
+                    </div>
+
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="{{ route('customer-list-order-requests') }}" :active="request()->routeIs(
+                            'customer-list-order-requests',
+                            'view-order-request',
+                            'edit-order-request',
+                        )">
+                            {{ __('Order Requests') }}
+                        </x-nav-link>
+                    </div>
+
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="{{ route('customer-list-orders') }}" :active="request()->routeIs(
+                            'customer-list-orders',
+                            'order-view',
+                            'order-review',
+                            'leave-product-review',
+                        )">
+                            {{ __('Orders') }}
+                        </x-nav-link>
+                    </div>
+
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="{{ route('customer-list-reviews') }}" :active="request()->routeIs('customer-list-reviews', 'edit-review')">
+                            {{ __('Reviews') }}
+                        </x-nav-link>
+                    </div>
+
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="{{ route('customer-list-installations') }}" :active="request()->routeIs('customer-list-installations', 'installation-view')">
+                            {{ __('Installations') }}
                         </x-nav-link>
                     </div>
                 @endif
@@ -198,14 +231,41 @@
             <!-- Customer -->
             @if (Auth::user()->type === 'customer')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-responsive-nav-link href="{{ route('customer-product-grid') }}" :active="request()->routeIs('customer-product-grid', 'product-view')">
+                        {{ __('Catalogue') }}
                     </x-responsive-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-responsive-nav-link href="{{ route('list-product') }}" :active="request()->routeIs('list-product')">
-                        {{ __('List Products') }}
+                    <x-responsive-nav-link href="{{ route('customer-list-order-requests') }}" :active="request()->routeIs(
+                        'customer-list-order-requests',
+                        'view-order-request',
+                        'edit-order-request',
+                    )">
+                        {{ __('Order Requests') }}
+                    </x-responsive-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-responsive-nav-link href="{{ route('customer-list-orders') }}" :active="request()->routeIs(
+                        'customer-list-orders',
+                        'order-view',
+                        'order-review',
+                        'leave-product-review',
+                    )">
+                        {{ __('Orders') }}
+                    </x-responsive-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-responsive-nav-link href="{{ route('customer-list-reviews') }}" :active="request()->routeIs('customer-list-reviews', 'edit-review')">
+                        {{ __('Reviews') }}
+                    </x-responsive-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-responsive-nav-link href="{{ route('customer-list-installations') }}" :active="request()->routeIs('customer-list-installations', 'installation-view')">
+                        {{ __('Installations') }}
                     </x-responsive-nav-link>
                 </div>
             @endif
