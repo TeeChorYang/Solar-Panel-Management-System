@@ -59,7 +59,7 @@ class ListMaintenances extends Component implements HasTable, HasForms
             ])
             ->headerActions([
                 CreateAction::make()
-                    ->model(model: Installation::class)
+                    ->model(model: MaintenanceLog::class)
                     ->form([
                         Select::make('installation_id')
                             ->label('Installation ID')
