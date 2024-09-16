@@ -50,6 +50,7 @@ class CustomerListInstallations extends Component implements HasForms, HasTable
                     ->label('Installation Status')
                     ->badge()
                     ->sortable()
+                    ->formatStateUsing(fn(string $state): string => ucwords(str_replace('_', ' ', $state)))
                     ->colors([
                         'warning' => 'scheduled',
                         'success' => 'completed',

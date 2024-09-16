@@ -110,6 +110,7 @@ class CustomerEditOrderRequest extends Component implements HasForms, HasInfolis
                 TextEntry::make('status')
                     ->label('Status')
                     ->badge()
+                    ->formatStateUsing(fn(string $state): string => ucwords(str_replace('_', ' ', $state)))
                     ->colors([
                         'warning' => 'pending',
                         'success' => 'approved',

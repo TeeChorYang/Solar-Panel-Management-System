@@ -14,7 +14,7 @@
         <div class="bg-white py-16 px-4 sm:px-6 lg:col-span-3 lg:py-24 lg:px-8 xl:pl-12">
             <div class="max-w-lg mx-auto lg:max-w-none">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight pb-4">
-                    {{ __('Edit Rating:') }}
+                    {{ __('Edit Rating And Review:') }}
                 </h2>
                 <form wire:submit.prevent="save" class="grid grid-cols-1 gap-y-6">
                     {{ $this->form }}

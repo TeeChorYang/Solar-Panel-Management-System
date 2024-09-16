@@ -49,6 +49,7 @@ class CustomerListOrderRequests extends Component implements HasForms, HasTable
                     ->label('Status')
                     ->badge()
                     ->sortable()
+                    ->formatStateUsing(fn(string $state): string => ucwords(str_replace('_', ' ', $state)))
                     ->colors([
                         'warning' => 'pending',
                         'success' => 'approved',

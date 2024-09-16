@@ -52,14 +52,14 @@ class CustomerListOrders extends Component implements HasForms, HasTable
                             ->money('MYR')
                             ->sortable()
                             ->formatStateUsing(function ($state) {
-                                return 'Total Amount: ' . $state;
+                                return 'Total Amount: MYR ' . $state;
                             }),
                         TextColumn::make('shipping_fees')
                             ->label('Shipping Fees')
                             ->money('MYR')
                             ->sortable()
                             ->formatStateUsing(function ($state) {
-                                return 'Shipping Fees: ' . $state;
+                                return 'Shipping Fees: MYR ' . $state;
                             }),
                         TextColumn::make('request.quantity')
                             ->label('Stock')
@@ -71,6 +71,7 @@ class CustomerListOrders extends Component implements HasForms, HasTable
                             ->label('Order Status')
                             ->badge()
                             ->sortable()
+                            ->formatStateUsing(fn(string $state): string => ucwords(str_replace('_', ' ', $state)))
                             ->colors([
                                 'info' => 'pending',
                                 'warning' => 'in_delivery',

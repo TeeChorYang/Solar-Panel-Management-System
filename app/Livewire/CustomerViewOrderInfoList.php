@@ -74,6 +74,7 @@ class CustomerViewOrderInfoList extends Component implements HasForms, HasInfoli
                 TextEntry::make('status')
                     ->label('Order Status')
                     ->badge()
+                    ->formatStateUsing(fn(string $state): string => ucwords(str_replace('_', ' ', $state)))
                     ->colors([
                         'info' => 'pending',
                         'warning' => 'in_delivery',

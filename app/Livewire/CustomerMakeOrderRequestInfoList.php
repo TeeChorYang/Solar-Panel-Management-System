@@ -47,8 +47,9 @@ class CustomerMakeOrderRequestInfoList extends Component implements HasForms, Ha
                 TextEntry::make('supplier.email')
                     ->label('Supplier Email'),
                 TextEntry::make('name')
-                    ->label('Name'),
+                    ->label('Product Name'),
                 TextEntry::make('price')
+                    ->label('Unit Price')
                     ->money('MYR'),
                 TextEntry::make('stock')
                     ->label('Stock (Units Available)'),
