@@ -82,7 +82,7 @@ class ListMaintenances extends Component implements HasTable, HasForms
                             ->label('Status')
                             ->required()
                             ->default('scheduled')
-                            ->options(config('staticdata.maintanance_status'))
+                            ->options(config('staticdata.maintenance_status'))
                             ->searchable(),
                         Textarea::make('description')
                             ->label('Description')
@@ -143,7 +143,7 @@ class ListMaintenances extends Component implements HasTable, HasForms
                             ->label('Status')
                             ->required()
                             ->default('scheduled')
-                            ->options(config('staticdata.maintanance_status'))
+                            ->options(config('staticdata.maintenance_status'))
                             ->searchable(),
                         Textarea::make('description')
                             ->label('Description')
