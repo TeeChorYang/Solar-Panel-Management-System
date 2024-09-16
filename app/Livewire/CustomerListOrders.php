@@ -72,14 +72,14 @@ class CustomerListOrders extends Component implements HasForms, HasTable
                             ->badge()
                             ->sortable()
                             ->colors([
-                                'info' => config('staticdata.order.order_status.pending'),
-                                'warning' => config('staticdata.order.order_status.in_delivery'),
-                                'success' => config('staticdata.order.order_status.shipped'),
+                                'info' => 'pending',
+                                'warning' => 'in_delivery',
+                                'success' => 'shipped',
                             ])
                             ->icon(fn($state) => match ($state) {
-                                config('staticdata.order.order_status.pending') => config('staticdata.icons.pending'),
-                                config('staticdata.order.order_status.in_delivery') => config('staticdata.icons.truck'),
-                                config('staticdata.order.order_status.shipped') => config('staticdata.icons.check_circle'),
+                                'pending' => config('staticdata.icons.pending'),
+                                'in_delivery' => config('staticdata.icons.truck'),
+                                'shipped' => config('staticdata.icons.check_circle'),
                             }),
                     ]),
                 ])->space(3),
@@ -102,7 +102,7 @@ class CustomerListOrders extends Component implements HasForms, HasTable
                     ->icon('heroicon-c-pencil-square')
                     ->color(fn(Order $order) => $this->hasReview($order) ? 'opacity-50' : 'success')
                     ->url(fn(Order $order): string => route('leave-product-review', ['order' => $order]))
-                    ->visible(fn(Order $order) => $order->status === config('staticdata.order.order_status.shipped'))
+                    ->visible(fn(Order $order) => $order->status === 'shipped')
                     ->disabled(fn(Order $order) => $this->hasReview($order))
                     ->extraAttributes(fn(Order $order) => $this->hasReview($order) ? ['class' => 'grayed-out'] : []),
             ])

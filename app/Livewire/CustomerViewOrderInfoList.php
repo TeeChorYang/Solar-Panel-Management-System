@@ -75,14 +75,14 @@ class CustomerViewOrderInfoList extends Component implements HasForms, HasInfoli
                     ->label('Order Status')
                     ->badge()
                     ->colors([
-                        'info' => config('staticdata.order.order_status.pending'),
-                        'warning' => config('staticdata.order.order_status.in_delivery'),
-                        'success' => config('staticdata.order.order_status.shipped'),
+                        'info' => 'pending',
+                        'warning' => 'in_delivery',
+                        'success' => 'shipped',
                     ])
                     ->icon(fn($state) => match ($state) {
-                        config('staticdata.order.order_status.pending') => config('staticdata.icons.pending'),
-                        config('staticdata.order.order_status.in_delivery') => config('staticdata.icons.truck'),
-                        config('staticdata.order.order_status.shipped') => config('staticdata.icons.check_circle'),
+                        'pending' => config('staticdata.icons.pending'),
+                        'in_delivery' => config('staticdata.icons.truck'),
+                        'shipped' => config('staticdata.icons.check_circle'),
                     }),
                 TextEntry::make('request.quantity')
                     ->label('Quantity Ordered')

@@ -67,7 +67,7 @@ class CustomerViewOrderRequestInfoList extends Component implements HasForms, Ha
                 TextEntry::make('approved_at')
                     ->label('Request Approved Date')
                     ->date('Y-m-d')
-                    ->visible(fn() => $this->orderRequest->status === config('staticdata.order.request_status.approved')),
+                    ->visible(fn() => $this->orderRequest->status === 'approved'),
                 TextEntry::make('total_amount')
                     ->label('Total Amount')
                     ->money('MYR'),
@@ -80,14 +80,14 @@ class CustomerViewOrderRequestInfoList extends Component implements HasForms, Ha
                     ->label('Status')
                     ->badge()
                     ->colors([
-                        'warning' => config('staticdata.order.request_status.pending'),
-                        'success' => config('staticdata.order.request_status.approved'),
-                        'danger' => config('staticdata.order.request_status.rejected'),
+                        'warning' => 'pending',
+                        'success' => 'approved',
+                        'danger' => 'rejected',
                     ])
                     ->icon(fn($state) => match ($state) {
-                        config('staticdata.order.request_status.pending') => config('staticdata.icons.pending'),
-                        config('staticdata.order.request_status.approved') => config('staticdata.icons.check_circle'),
-                        config('staticdata.order.request_status.rejected') => config('staticdata.icons.x_circle'),
+                        'pending' => config('staticdata.icons.pending'),
+                        'approved' => config('staticdata.icons.check_circle'),
+                        'rejected' => config('staticdata.icons.x_circle'),
                     }),
             ]);
     }

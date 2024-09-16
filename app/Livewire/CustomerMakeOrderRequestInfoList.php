@@ -94,7 +94,7 @@ class CustomerMakeOrderRequestInfoList extends Component implements HasForms, Ha
             'product_id' => $this->product->id,
             'quantity' => $validatedData['quantity'],
             'total_amount' => $this->product->price * $validatedData['quantity'],
-            'status' => config('staticdata.order.request_status.pending'),
+            'status' => 'pending',
             'shipping_address' => $validatedData['shipping_address'],
         ]);
 

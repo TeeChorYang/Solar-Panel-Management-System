@@ -85,14 +85,14 @@ class CustomerViewInstallationInfoList extends Component implements HasForms, Ha
                     ->label('Installation Status')
                     ->badge()
                     ->colors([
-                        'warning' => config('staticdata.installation_status.scheduled'),
-                        'success' => config('staticdata.installation_status.completed'),
-                        'danger' => config('staticdata.installation_status.cancelled'),
+                        'warning' => 'scheduled',
+                        'success' => 'completed',
+                        'danger' => 'cancelled',
                     ])
                     ->icon(fn($state) => match ($state) {
-                        config('staticdata.installation_status.scheduled') => config('staticdata.icons.pending'),
-                        config('staticdata.installation_status.completed') => config('staticdata.icons.check_circle'),
-                        config('staticdata.installation_status.cancelled') => config('staticdata.icons.x_circle'),
+                        'scheduled' => config('staticdata.icons.pending'),
+                        'completed' => config('staticdata.icons.check_circle'),
+                        'cancelled' => config('staticdata.icons.x_circle'),
                     }),
             ]);
     }

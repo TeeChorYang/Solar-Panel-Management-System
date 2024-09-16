@@ -50,14 +50,14 @@ class CustomerListOrderRequests extends Component implements HasForms, HasTable
                     ->badge()
                     ->sortable()
                     ->colors([
-                        'warning' => config('staticdata.order.request_status.pending'),
-                        'success' => config('staticdata.order.request_status.approved'),
-                        'danger' => config('staticdata.order.request_status.rejected'),
+                        'warning' => 'pending',
+                        'success' => 'approved',
+                        'danger' => 'rejected',
                     ])
                     ->icon(fn($state) => match ($state) {
-                        config('staticdata.order.request_status.pending') => config('staticdata.icons.pending'),
-                        config('staticdata.order.request_status.approved') => config('staticdata.icons.check_circle'),
-                        config('staticdata.order.request_status.rejected') => config('staticdata.icons.x_circle'),
+                        'pending' => config('staticdata.icons.pending'),
+                        'approved' => config('staticdata.icons.check_circle'),
+                        'rejected' => config('staticdata.icons.x_circle'),
                     }),
                 TextColumn::make('created_at')
                     ->label('Request Date')
@@ -74,11 +74,11 @@ class CustomerListOrderRequests extends Component implements HasForms, HasTable
                 EditAction::make()
                     ->label('Edit')
                     ->color('warning')
-                    ->visible(fn(OrderRequest $orderRequest) => $orderRequest->status !== config('staticdata.order.request_status.approved'))
+                    ->visible(fn(OrderRequest $orderRequest) => $orderRequest->status !== 'approved')
                     ->url(fn(OrderRequest $orderRequest): string => route('edit-order-request', ['orderRequest' => $orderRequest])),
                 DeleteAction::make()
                     ->label('Delete')
-                    ->visible(fn(OrderRequest $orderRequest) => $orderRequest->status !== config('staticdata.order.request_status.approved')),
+                    ->visible(fn(OrderRequest $orderRequest) => $orderRequest->status !== 'approved'),
             ])
             ->defaultPaginationPageOption(10)
             ->paginationPageOptions([
