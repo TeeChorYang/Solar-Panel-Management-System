@@ -23,36 +23,33 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
 
-
 class ProductStatus extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
 
     /**
-     * Find OrderRequest records that belong to a specific supplier.
+     * Find order requests by supplier ID.
      *
      * @param int $supplierId
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function findOrderRequestsBySupplier(int $supplierId)
     {
-        // Query to find OrderRequest records that belong to the specified supplier
         $orderRequests = OrderRequest::join('products', 'order_requests.product_id', '=', 'products.id')
             ->where('products.supplier_id', $supplierId)
-            ->select('order_requests.*') // Ensure only OrderRequest fields are selected
+            ->select('order_requests.*')
             ->get();
 
         return $orderRequests;
     }
 
     /**
-     * Define the table structure and query.
+     * Define the table structure.
      *
      * @param Table $table
      * @return Table
      */
-
     public function table(Table $table): Table
     {
         $supplierId = Auth::user()->id;
@@ -84,36 +81,12 @@ class ProductStatus extends Component implements HasForms, HasTable
                     ->label('Approved At')
                     ->dateTime()
                     ->sortable(),
-
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
                     ->formatStateUsing(fn(string $state): string => ucwords(str_replace('_', ' ', $state))),
             ])
             ->actions([
-                Action::make('status')
-                    ->label('Update Status')
-                    ->icon('heroicon-m-check-badge')
-                    ->color('warning')
-                    ->fillForm(fn(OrderRequest $record): array => [
-                        'status' => $record->status,
-                    ])
-                    ->form([
-                        Select::make('status')
-                            ->label('Status')
-                            ->options(config('staticdata.order.order_status'))
-                            ->searchable(),
-                    ])
-                    ->action(function (array $data, OrderRequest $record): void {
-                        $record->status = $data['status'];
-                        $record->save();
-
-                        Notification::make()
-                            ->title('Status Updated Successfully')
-                            ->success()
-                            ->color('success')
-                            ->send();
-                    }),
                 Action::make('makeOrder')
                     ->label('Place Order')
                     ->icon('heroicon-m-check-badge')
@@ -137,16 +110,20 @@ class ProductStatus extends Component implements HasForms, HasTable
                             ->searchable(),
                     ])
                     ->action(function (array $data, OrderRequest $record): void {
+                        // Save the order
                         $order = new Order();
                         $order->request_id = $record->id;
                         $order->order_date = $data['order_date'];
                         $order->shipping_fees = $data['shipping_fees'];
                         $order->status = $data['status'];
-
                         $order->save();
 
+                        // Update the order request status
+                        $record->status = $data['status'];
+                        $record->save();
+
                         Notification::make()
-                            ->title('Order Made Successfully')
+                            ->title('Order Made and Status Updated Successfully')
                             ->success()
                             ->color('success')
                             ->send();
@@ -154,6 +131,11 @@ class ProductStatus extends Component implements HasForms, HasTable
             ]);
     }
 
+    /**
+     * Render the component view.
+     *
+     * @return View
+     */
     public function render(): View
     {
         return view('livewire.product-status')

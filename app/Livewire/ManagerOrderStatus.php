@@ -31,38 +31,40 @@ class ManagerOrderStatus extends Component implements HasForms, HasTable
     use InteractsWithForms;
 
     /**
-     * Find OrderRequest records that belong to a specific supplier.
+     * Find order requests by supplier ID.
      *
      * @param int $supplierId
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function findOrderRequestsBySupplier(int $supplierId)
     {
-        // Query to find OrderRequest records that belong to the specified supplier
         $orderRequests = OrderRequest::join('products', 'order_requests.product_id', '=', 'products.id')
             ->where('products.supplier_id', $supplierId)
-            ->select('order_requests.*') // Ensure only OrderRequest fields are selected
+            ->select('order_requests.*')
             ->get();
 
         return $orderRequests;
     }
 
     /**
-     * Define the table structure and query.
+     * Define the table structure.
      *
      * @param Table $table
      * @return Table
      */
-
     public function table(Table $table): Table
     {
         $supplierId = Auth::user()->id;
         $orderRequests = $this->findOrderRequestsBySupplier($supplierId);
+        $orders = Order::query()
+            ->whereIn('request_id', $orderRequests->pluck('id'))
+            ->get();
+
         return $table
             ->query(
                 OrderRequest::query()
-                    ->whereIn('id', $orderRequests->pluck('id'))
-                    ->whereNull('deleted_at') // Exclude soft deleted records
+                    ->whereIn('id', $orders->pluck('request_id'))
+                    ->whereNull('deleted_at')
                     ->orderBy('order_requests.id', 'desc')
             )
             ->columns([
@@ -74,20 +76,19 @@ class ManagerOrderStatus extends Component implements HasForms, HasTable
                     ->label('Product')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('quantity')
-                    ->label('Quantity')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('total_amount')
-                    ->label('Total Amount')
-                    ->money('MYR')
-                    ->sortable(),
-                TextColumn::make('approved_at')
-                    ->label('Approved At')
+                TextColumn::make('orders.order_date')
+                    ->label('Order Date')
                     ->dateTime()
                     ->sortable(),
-
-                TextColumn::make('status')
+                TextColumn::make('orders.shipping_fees')
+                    ->label('Shipping Fees')
+                    ->money('MYR')
+                    ->sortable(),
+                TextColumn::make('orders.updated_at')
+                    ->label('Updated At')
+                    ->dateTime()
+                    ->sortable(),
+                TextColumn::make('orders.status')
                     ->label('Status')
                     ->badge()
                     ->formatStateUsing(fn(string $state): string => ucwords(str_replace('_', ' ', $state))),
@@ -111,6 +112,10 @@ class ManagerOrderStatus extends Component implements HasForms, HasTable
                         if ($order) {
                             $order->status = $data['status'];
                             $order->save();
+
+                            // Update the order request status
+                            $record->status = $data['status'];
+                            $record->save();
 
                             Notification::make()
                                 ->title('Status Updated Successfully')
@@ -147,7 +152,6 @@ class ManagerOrderStatus extends Component implements HasForms, HasTable
                         $order->order_date = $data['order_date'];
                         $order->shipping_fees = $data['shipping_fees'];
                         $order->status = $data['status'];
-
                         $order->save();
 
                         Notification::make()
@@ -162,7 +166,6 @@ class ManagerOrderStatus extends Component implements HasForms, HasTable
                         if ($order) {
                             $order->delete();
 
-                            // Update the deleted_at timestamp in the OrderRequest table
                             $record->deleted_at = Carbon::now();
                             $record->save();
 
@@ -177,7 +180,7 @@ class ManagerOrderStatus extends Component implements HasForms, HasTable
 
     public function render(): View
     {
-        return view('livewire.product-status')
+        return view('livewire.manager-order-status')
             ->layout('layouts.app');
     }
 }
