@@ -29,7 +29,7 @@ class ProductStatus extends Component implements HasForms, HasTable
     use InteractsWithForms;
 
     /**
-     * Find order requests by supplier ID.
+     * 
      *
      * @param int $supplierId
      * @return \Illuminate\Database\Eloquent\Collection
@@ -45,7 +45,7 @@ class ProductStatus extends Component implements HasForms, HasTable
     }
 
     /**
-     * Define the table structure.
+     *
      *
      * @param Table $table
      * @return Table
@@ -110,7 +110,7 @@ class ProductStatus extends Component implements HasForms, HasTable
                             ->searchable(),
                     ])
                     ->action(function (array $data, OrderRequest $record): void {
-                        // Save the order
+                        
                         $order = new Order();
                         $order->request_id = $record->id;
                         $order->order_date = $data['order_date'];
@@ -118,7 +118,7 @@ class ProductStatus extends Component implements HasForms, HasTable
                         $order->status = $data['status'];
                         $order->save();
 
-                        // Update the order request status
+                        
                         $record->status = $data['status'];
                         $record->save();
 
@@ -132,7 +132,7 @@ class ProductStatus extends Component implements HasForms, HasTable
     }
 
     /**
-     * Render the component view.
+     * 
      *
      * @return View
      */

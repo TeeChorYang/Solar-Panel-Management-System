@@ -31,7 +31,7 @@ class ManagerOrderStatus extends Component implements HasForms, HasTable
     use InteractsWithForms;
 
     /**
-     * Find order requests by supplier ID.
+     * 
      *
      * @param int $supplierId
      * @return \Illuminate\Database\Eloquent\Collection
@@ -47,7 +47,7 @@ class ManagerOrderStatus extends Component implements HasForms, HasTable
     }
 
     /**
-     * Define the table structure.
+     * 
      *
      * @param Table $table
      * @return Table
@@ -113,7 +113,7 @@ class ManagerOrderStatus extends Component implements HasForms, HasTable
                             $order->status = $data['status'];
                             $order->save();
 
-                            // Update the order request status
+                            
                             $record->status = $data['status'];
                             $record->save();
 
