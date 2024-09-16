@@ -65,7 +65,7 @@ class MaintenanceLogResource extends Resource
                     ->label('Status')
                     ->required()
                     ->default('scheduled')
-                    ->options(config('staticdata.maintanance_status'))
+                    ->options(config('staticdata.maintenance_status'))
                     ->searchable(),
                 Forms\Components\Textarea::make('description')
                     ->label('Description')
