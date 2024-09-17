@@ -23,36 +23,33 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
 
-
 class ProductStatus extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
 
     /**
-     * Find OrderRequest records that belong to a specific supplier.
+     * 
      *
      * @param int $supplierId
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function findOrderRequestsBySupplier(int $supplierId)
     {
-        // Query to find OrderRequest records that belong to the specified supplier
         $orderRequests = OrderRequest::join('products', 'order_requests.product_id', '=', 'products.id')
             ->where('products.supplier_id', $supplierId)
-            ->select('order_requests.*') // Ensure only OrderRequest fields are selected
+            ->select('order_requests.*')
             ->get();
 
         return $orderRequests;
     }
 
     /**
-     * Define the table structure and query.
+     *
      *
      * @param Table $table
      * @return Table
      */
-
     public function table(Table $table): Table
     {
         $supplierId = Auth::user()->id;
@@ -84,13 +81,13 @@ class ProductStatus extends Component implements HasForms, HasTable
                     ->label('Approved At')
                     ->dateTime()
                     ->sortable(),
-
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
                     ->formatStateUsing(fn(string $state): string => ucwords(str_replace('_', ' ', $state))),
             ])
             ->actions([
+                // update status for order request is still required
                 Action::make('status')
                     ->label('Update Status')
                     ->icon('heroicon-m-check-badge')
@@ -143,16 +140,18 @@ class ProductStatus extends Component implements HasForms, HasTable
                             ->searchable(),
                     ])
                     ->action(function (array $data, OrderRequest $record): void {
+
                         $order = new Order();
                         $order->request_id = $record->id;
                         $order->order_date = $data['order_date'];
                         $order->shipping_fees = $data['shipping_fees'];
                         $order->status = $data['status'];
-
                         $order->save();
 
+                        // request status and order status are two different things, do not save the request status with the order status
+
                         Notification::make()
-                            ->title('Order Made Successfully')
+                            ->title('Order Made and Status Updated Successfully')
                             ->success()
                             ->color('success')
                             ->send();
@@ -161,6 +160,11 @@ class ProductStatus extends Component implements HasForms, HasTable
             ]);
     }
 
+    /**
+     * 
+     *
+     * @return View
+     */
     public function render(): View
     {
         return view('livewire.product-status')
