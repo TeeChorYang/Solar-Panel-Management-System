@@ -101,11 +101,17 @@ class ProductStatus extends Component implements HasForms, HasTable
                     ->form([
                         Select::make('status')
                             ->label('Status')
-                            ->options(config('staticdata.order.order_status'))
+                            ->options(config('staticdata.order.request_status'))
                             ->searchable(),
                     ])
                     ->action(function (array $data, OrderRequest $record): void {
                         $record->status = $data['status'];
+                        // added logic to update approved_at field based on request status
+                        if ($data['status'] === 'approved') {
+                            $record->approved_at = now();
+                        } else {
+                            $record->approved_at = null;
+                        }
                         $record->save();
 
                         Notification::make()
@@ -150,7 +156,8 @@ class ProductStatus extends Component implements HasForms, HasTable
                             ->success()
                             ->color('success')
                             ->send();
-                    })->visible(fn(OrderRequest $record) => !Order::where('request_id', $record->id)->exists()),
+                    })->visible(fn(OrderRequest $record) => !Order::where('request_id', $record->id)->exists() && $record->status === 'approved'),
+                // added logic so that place order is only visible when the order request is approved and its order has not been made
             ]);
     }
 
