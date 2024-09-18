@@ -5,7 +5,7 @@
     <script src="{{ asset('js/toggle-disclosure.js') }}" defer></script>
 </x-slot>
 
-<div class="relative bg-white">
+<div class="relative bg-white h-screen">
     <div class="relative max-w-7xl mx-auto lg:grid lg:grid-cols-5">
         <div class="bg-gray-50 py-16 px-4 sm:px-6 lg:col-span-2 lg:px-8 lg:py-24 xl:pr-12">
             <div class="max-w-lg mx-auto">
