@@ -34,6 +34,12 @@ class CustomerProductGrid extends Component implements HasForms, HasTable
                             ->weight(FontWeight::Bold)
                             ->searchable()
                             ->sortable(),
+                        TextColumn::make('category.name')
+                            ->label('Product Category')
+                            ->sortable()
+                            ->formatStateUsing(function ($state) {
+                                return 'Category: ' . $state;
+                            }),
                         TextColumn::make('price')
                             ->money('MYR')
                             ->sortable(),
