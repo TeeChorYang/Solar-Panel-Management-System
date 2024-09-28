@@ -4,11 +4,19 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-mark class="block h-9 w-auto" />
-                    </a>
-                </div>
+                @if (Auth::user()->type === 'customer')
+                    <div class="shrink-0 flex items-center">
+                        <a href="{{ route('customer-product-grid') }}">
+                            <x-application-mark class="block h-9 w-auto" />
+                        </a>
+                    </div>
+                @else
+                    <div class="shrink-0 flex items-center">
+                        <a href="{{ route('dashboard') }}">
+                            <x-application-mark class="block h-9 w-auto" />
+                        </a>
+                    </div>
+                @endif
 
                 <!-- Navigation Links -->
                 <!-- Customer -->
