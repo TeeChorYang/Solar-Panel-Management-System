@@ -18,6 +18,7 @@ use App\Livewire\CustomerMakeOrderRequestInfoList;
 use App\Livewire\CustomerViewInstallationInfoList;
 use App\Livewire\CustomerViewOrderRequestInfoList;
 use App\Livewire\ManagerOrderStatus;
+use App\Livewire\Support;
 
 Route::get('/', function () {
     return view('welcome');
@@ -63,7 +64,8 @@ Route::middleware([
 
     Route::get('/list-product', ListProducts::class)->name('list-product');
     Route::get('/product-status', ProductStatus::class)->name('product-status');
-    Route::get('/manager-order-status', ManagerOrderStatus::class)->name ('manager-order-status');
+    Route::get('/manager-order-status', ManagerOrderStatus::class)->name('manager-order-status');
     Route::get('/list-installations', ListInstallations::class)->name('list-installations');
     Route::get('/list-maintenances', ListMaintenances::class)->name('list-maintenances');
+    Route::get('/support', Support::class)->name('support');
 });
